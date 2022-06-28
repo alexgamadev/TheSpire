@@ -1,13 +1,17 @@
-using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace TheSpire.Models;
 
+[BsonIgnoreExtraElements]
 public class AscensionData
 {
-    [Required]
-    [Key]
-    public int id;
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = "";
 
-    [Required]
-    public float ascensionDuration;
+    [BsonElement("duration")]
+    public float Duration { get; set; }
+
+    public int? Rank { get; set; }
 }
