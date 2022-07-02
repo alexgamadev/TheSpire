@@ -13,36 +13,43 @@ public class AscensionDataRepo : IAscensionDataRepo
         _ascensionData = database.GetCollection<AscensionData>(dbSettings.AscensionRunsCollection);
     }
 
-    public AscensionData Create(AscensionData data)
+    public async Task<AscensionData> CreateAsync(AscensionData data)
     {
-        _ascensionData.InsertOne(data);
+        await _ascensionData.Indexes.CreateOneAsync(new CreateIndexModel<AscensionData>(Builders<AscensionData>.IndexKeys.Ascending(_ => _.Duration)));
+
+        await _ascensionData.InsertOneAsync(data);
         return data;
     }
 
-    public AscensionData Get(string id)
+    public async Task<AscensionData> GetAsync(string id)
     {
-        return _ascensionData.Find(data => data.Id == id).FirstOrDefault();
+        return await _ascensionData.Find(data => data.Id == id).FirstOrDefaultAsync();
     }
 
-    public List<AscensionData> GetAll()
+    public async Task<List<AscensionData>> GetAllAsync()
     {
-        return _ascensionData.Find(data => true).ToList();
+        return await _ascensionData.Find(data => true).ToListAsync();
     }
 
-    public int GetRank(string id)
+    public async Task<int> GetRankAsync(string id)
     {
-        var sortedData = _ascensionData.Find(data => true).SortBy(data => data.Duration).ToList();
+        var sortedData = await _ascensionData.Find(data => true).SortBy(data => data.Duration).ToListAsync();
+        if (sortedData is null)
+        {
+            return 1;
+        }
+
         int rank = sortedData.FindIndex(data => data.Id == id);
         return rank + 1;
     }
 
-    public void Remove(string id)
+    public async Task RemoveAsync(string id)
     {
-        _ascensionData.DeleteOne(student => student.Id == id);
+        await _ascensionData.DeleteOneAsync(student => student.Id == id);
     }
 
-    public void Update(string id, AscensionData data)
+    public async Task UpdateAsync(string id, AscensionData data)
     {
-        _ascensionData.ReplaceOne(student => student.Id == id, data);
+        await _ascensionData.ReplaceOneAsync(student => student.Id == id, data);
     }
 }

@@ -4,10 +4,10 @@ namespace TheSpire.Repositories;
 
 public interface IAscensionDataRepo
 {
-    List<AscensionData> GetAll();
-    AscensionData Get(string id);
-    int GetRank(string id);
-    AscensionData Create(AscensionData data);
-    void Update(string id, AscensionData data);
-    void Remove(string id);
+    Task<List<AscensionData>> GetAllAsync();
+    Task<AscensionData> GetAsync(string id);
+    Task<int> GetRankAsync(string id);
+    Task<AscensionData> CreateAsync(AscensionData data);
+    Task UpdateAsync(string id, AscensionData data);
+    Task RemoveAsync(string id);
 }

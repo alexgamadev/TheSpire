@@ -16,21 +16,26 @@ public class AscensionDataController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<AscensionData>> GetAll()
+    public async Task<ActionResult<IEnumerable<AscensionData>>> GetAllAsync()
     {
-        return Ok(_repository.GetAll());
+        var data = await _repository.GetAllAsync();
+        if ( data is null )
+        {
+            return NotFound();
+        }
+        return Ok(data);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<AscensionData> Get(string id)
+    public async Task<ActionResult<AscensionData>> GetAsync(string id)
     {
-        var result = _repository.Get(id);
+        var result = await _repository.GetAsync(id);
         if (result is null)
         {
             return NotFound();
         }
 
-        var rank = _repository.GetRank(id);
+        var rank = await _repository.GetRankAsync(id);
         result.Rank = rank;
 
         return Ok(result);
@@ -38,40 +43,40 @@ public class AscensionDataController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<AscensionData> Create([FromBody] AscensionData data)
+    public async Task<ActionResult<AscensionData>> CreateAsync([FromBody] AscensionData data)
     {
-        _repository.Create(data);
-        var rank = _repository.GetRank(data.Id);
+        await _repository.CreateAsync(data);
+        var rank = await _repository.GetRankAsync(data.Id);
         data.Rank = rank;
-        return CreatedAtAction(nameof(Get), new { id = data.Id }, data);
+        return CreatedAtAction(nameof(GetAsync), new { id = data.Id }, data);
     }
 
     [HttpPut]
-    public ActionResult Put(string id, [FromBody] AscensionData data)
+    public async Task<ActionResult> PutAsync(string id, [FromBody] AscensionData data)
     {
-        var existingData = _repository.Get(id);
+        var existingData = await _repository.GetAsync(id);
 
         if (existingData is null)
         {
             return NotFound();
         }
 
-        _repository.Update(id, data);
+        await _repository.UpdateAsync(id, data);
 
         return Ok();
     }
 
     [HttpDelete]
-    public ActionResult Delete(string id)
+    public async Task<ActionResult> DeleteAsync(string id)
     {
-        var existingData = _repository.Get(id);
+        var existingData = await _repository.GetAsync(id);
 
         if (existingData is null)
         {
             return NotFound();
         }
 
-        _repository.Remove(id);
+        await _repository.RemoveAsync(id);
 
         return Ok();
     }
