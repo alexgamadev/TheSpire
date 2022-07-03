@@ -45,11 +45,11 @@ public class AscensionDataRepo : IAscensionDataRepo
 
     public async Task RemoveAsync(string id)
     {
-        await _ascensionData.DeleteOneAsync(student => student.Id == id);
+        await _ascensionData.DeleteOneAsync(data => data.Id == id);
     }
 
     public async Task UpdateAsync(string id, AscensionData data)
     {
-        await _ascensionData.ReplaceOneAsync(student => student.Id == id, data);
+        await _ascensionData.ReplaceOneAsync(data => data.Id == id, data);
     }
 }

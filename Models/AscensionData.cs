@@ -11,7 +11,12 @@ public class AscensionData
     public string Id { get; set; } = "";
 
     [BsonElement("duration")]
+    [BsonRequired]
     public float Duration { get; set; }
+
+    [BsonElement("account_id")]
+    [BsonRequired]
+    public string AccountId { get; set; } = "";
 
     public int? Rank { get; set; }
 }
