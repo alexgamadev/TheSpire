@@ -48,7 +48,7 @@ public class AscensionDataController : ControllerBase
         await _repository.CreateAsync(data);
         var rank = await _repository.GetRankAsync(data.Id);
         data.Rank = rank;
-        return CreatedAtAction(nameof(GetAsync), new { id = data.Id }, data);
+        return CreatedAtAction("Get", new { id = data.Id }, data);
     }
 
     [HttpPut]
