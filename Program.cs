@@ -16,6 +16,7 @@ builder.Services.AddSingleton<IMongoClient>(services =>
     new MongoClient(builder.Configuration.GetValue<string>("MongoDB:ConnectionString")));
 
 builder.Services.AddScoped<IAscensionDataRepo, AscensionDataRepo>();
+builder.Services.AddScoped<ITemporaryUsersRepo, TemporaryUsersRepo>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

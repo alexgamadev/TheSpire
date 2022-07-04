@@ -5,5 +5,5 @@ public class ElementalTowerDbSettings : IElementalTowerDbSettings
     public string ConnectionString { get; set; } = "";
     public string DatabaseName { get; set; } = "";
     public string AscensionRunsCollection { get; set; } = "";
-    public string AccountsCollection { get; set; } = "";
+    public string TempUsersCollection { get; set; } = "";
 }

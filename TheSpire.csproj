@@ -10,6 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\TemporaryUser.cs\**" />
+    <Content Remove="Models\TemporaryUser.cs\**" />
+    <EmbeddedResource Remove="Models\TemporaryUser.cs\**" />
+    <None Remove="Models\TemporaryUser.cs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\Account.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.16.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />

@@ -3,18 +3,14 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace TheSpire.Models
 {
-    public class Account
+    public class TemporaryUser
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = "";
 
-        [BsonElement("device_indentifier")]
+        [BsonElement("device_identifier")]
         [BsonRequired]
         public string DeviceIdentifier { get; set; } = "";
-
-        [BsonElement("username")]
-        [BsonRequired]
-        public string Username { get; set; } = "";
     }
 }
